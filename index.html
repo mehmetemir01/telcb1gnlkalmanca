@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TELC B1 Günlük Çalışma</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="topbar card">
+        <div>
+          <p class="badge">TELC B1 • 3 Haziran hazırlık</p>
+          <h1>Günlük Almanca Çalışmanız</h1>
+        </div>
+        <div class="menu-wrap">
+          <button id="menuBtn" class="icon-btn" type="button" aria-label="Menü">⋯</button>
+          <div id="menuPanel" class="menu-panel hidden">
+            <button class="menu-item" data-view="home" type="button">Ana Sayfa</button>
+            <button class="menu-item" data-view="grammar" type="button">Grammar</button>
+            <button class="menu-item" data-view="dictionary" type="button">Sözlük</button>
+          </div>
+        </div>
+      </header>
+
+      <section id="motivationCard" class="card motivation-card">
+        <p class="motivation-label">Günün Motivasyonu</p>
+        <blockquote id="motivationText" class="motivation-quote"></blockquote>
+      </section>
+
+      <section id="homeView" class="view">
+        <section class="card progress-card" aria-labelledby="progressTitle">
+          <div class="row progress-heading">
+            <div>
+              <p class="daily-topic-label">Bugünün puanı</p>
+              <h2 id="progressTitle">İlerleme Durumu</h2>
+            </div>
+            <strong id="progressPercent" class="progress-percent">%0</strong>
+          </div>
+          <div
+            id="progressMeter"
+            class="progress-meter"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            aria-label="Bugünkü çalışma ilerlemesi"
+          >
+            <span id="progressFill"></span>
+          </div>
+          <p id="progressSummary" class="hint">Bugünkü quiz verisi yükleniyor...</p>
+          <div class="progress-breakdown" aria-label="Kelime ve grammar ilerleme kırılımı">
+            <div class="mini-progress">
+              <div class="mini-progress-head">
+                <span>Kelime</span>
+                <span id="wordProgressValue">-</span>
+              </div>
+              <div class="mini-meter"><span id="wordProgressFill"></span></div>
+            </div>
+            <div class="mini-progress">
+              <div class="mini-progress-head">
+                <span>Grammar</span>
+                <span id="grammarProgressValue">-</span>
+              </div>
+              <div class="mini-meter"><span id="grammarProgressFill"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card countdown-card" aria-live="polite">
+          <p class="countdown-label">Sınava Kalan Süre</p>
+          <p id="countdownText" class="countdown-value">Yükleniyor...</p>
+        </section>
+
+        <section class="card" aria-labelledby="wordListTitle">
+          <div class="row">
+            <h2 id="wordListTitle">Günün 10 Kelimesi</h2>
+            <button id="startQuizBtn" class="btn" type="button">Kelime Quizini Başlat</button>
+          </div>
+          <div class="difficulty-wrap">
+            <label for="difficultySelect" class="hint">Quiz zorluğu:</label>
+            <select id="difficultySelect" class="difficulty-select">
+              <option value="easy">Kolay</option>
+              <option value="medium" selected>Orta</option>
+              <option value="hard">Zor</option>
+            </select>
+          </div>
+          <p class="hint">Her kelimede artikel + Türkçe anlam + örnek cümle bulunur.</p>
+          <ul id="wordList" class="word-list"></ul>
+        </section>
+
+        <section class="card" aria-labelledby="dailyTasksTitle">
+          <h2 id="dailyTasksTitle">TELC B1 Günlük Görevler</h2>
+          <div id="dailyTasks" class="task-grid"></div>
+        </section>
+
+        <section class="card" aria-labelledby="grammarQuizTitle">
+          <div class="row">
+            <h2 id="grammarQuizTitle">Grammar Testi (10 Soru)</h2>
+            <button id="startGrammarQuizBtn" class="btn" type="button">Grammar Testini Başlat</button>
+          </div>
+          <div class="difficulty-wrap">
+            <label for="grammarDifficultySelect" class="hint">Test zorluğu:</label>
+            <select id="grammarDifficultySelect" class="difficulty-select">
+              <option value="easy">Kolay</option>
+              <option value="medium" selected>Orta</option>
+              <option value="hard">Zor</option>
+            </select>
+          </div>
+          <p class="hint">Grammar testi her seviyede 10 sorudur.</p>
+        </section>
+      </section>
+
+      <section id="grammarView" class="view hidden">
+        <section class="card" aria-labelledby="dailyGrammarTitle">
+          <h2 id="dailyGrammarTitle">Günün Konusu</h2>
+          <p class="daily-topic-label">Bugünün odak konusu</p>
+          <h3 id="dailyTopicTitle"></h3>
+          <p id="dailyTopicSummary"></p>
+          <div class="topic-note-grid daily-note-grid">
+            <article class="topic-note">
+              <span class="note-kicker">Kural</span>
+              <p id="dailyTopicRule"></p>
+            </article>
+            <article class="topic-note">
+              <span class="note-kicker">Örnek</span>
+              <p id="dailyTopicExample"></p>
+            </article>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="grammarTitle">
+          <h2 id="grammarTitle">Konu Seç ve Çalış</h2>
+          <div class="grammar-tools" aria-label="Grammar konu arama ve filtreleme">
+            <input id="grammarSearch" class="difficulty-select" type="text" placeholder="Konu ara..." />
+            <select id="grammarLevelFilter" class="difficulty-select">
+              <option value="all">Tüm seviyeler</option>
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="B1">B1</option>
+              <option value="B1+">B1+</option>
+            </select>
+          </div>
+          <div class="difficulty-wrap">
+            <label for="grammarSelect" class="hint">Grammar konusu:</label>
+            <select id="grammarSelect" class="difficulty-select"></select>
+          </div>
+          <p id="grammarFilterInfo" class="hint"></p>
+          <h3 id="topicTitle"></h3>
+          <p id="topicSummary"></p>
+          <article class="lesson-card">
+            <span class="note-kicker">Konu anlatımı</span>
+            <p id="topicLesson"></p>
+          </article>
+          <div class="topic-note-grid">
+            <article class="topic-note">
+              <span class="note-kicker">Kural / mantık</span>
+              <p id="topicRule"></p>
+            </article>
+            <article class="topic-note">
+              <span class="note-kicker">Çalışma tavsiyesi</span>
+              <p id="topicStudyAdvice"></p>
+            </article>
+          </div>
+          <h3 class="subheading">Örnekler</h3>
+          <ul id="topicExamples" class="example-list"></ul>
+          <p id="topicMistake" class="mistake-note"></p>
+          <ul id="topicTips" class="tips"></ul>
+          <p class="hint source-note">
+            Kaynak:
+            <a id="topicSourceLink" href="#" target="_blank" rel="noreferrer">Evde Almanca</a>
+          </p>
+        </section>
+      </section>
+
+      <section id="dictionaryView" class="view hidden">
+        <section class="card">
+          <h2>Sözlük ve Kasus Çekimleri</h2>
+          <p class="hint">Her gün otomatik 200 farklı kelime gösterilir. Kelimeyi açınca kasus çekimleri ve örnek cümleleri görebilirsin.</p>
+          <div class="difficulty-wrap">
+            <input id="dictionarySearch" class="difficulty-select" type="text" placeholder="Kelime veya anlam ara..." />
+            <select id="dictionaryArticleFilter" class="difficulty-select">
+              <option value="all">Tümü</option>
+              <option value="der">der</option>
+              <option value="die">die</option>
+              <option value="das">das</option>
+            </select>
+          </div>
+          <div id="dictionaryList" class="dictionary-list"></div>
+        </section>
+      </section>
+
+      <section id="quizSection" class="card hidden" aria-live="polite">
+        <div class="row">
+          <h2>Kelime Quiz</h2>
+          <button id="closeQuizBtn" class="btn btn-ghost" type="button">Kapat</button>
+        </div>
+        <p id="quizProgress" class="hint"></p>
+        <h3 id="quizQuestion"></h3>
+        <div id="quizOptions" class="quiz-options"></div>
+        <p id="quizFeedback" class="feedback" aria-label="Quiz cevabı efekti"></p>
+        <button id="retryWrongWordBtn" class="btn hidden" type="button">Yanlışları Tekrar Çöz</button>
+      </section>
+
+      <section id="grammarQuizSection" class="card hidden" aria-live="polite">
+        <div class="row">
+          <h2>Grammar Testi</h2>
+          <button id="closeGrammarQuizBtn" class="btn btn-ghost" type="button">Kapat</button>
+        </div>
+        <p id="grammarQuizProgress" class="hint"></p>
+        <h3 id="grammarQuizQuestion"></h3>
+        <div id="grammarQuizOptions" class="quiz-options"></div>
+        <p id="grammarQuizFeedback" class="feedback" aria-label="Grammar test cevabı"></p>
+        <button id="retryWrongGrammarBtn" class="btn hidden" type="button">Yanlışları Tekrar Çöz</button>
+      </section>
+
+      <footer class="card footer">
+        <p>Bu site herkes için ücretsizdir. Giriş yapmadan kullanılabilir.</p>
+        <p class="source-note site-sources">
+          Kaynakça:
+          <a href="https://evdealmanca.com/almanca-gramer-konulari/" target="_blank" rel="noreferrer">Evde Almanca gramer konuları</a>
+          ve
+          <a href="https://www.verbformen.de/" target="_blank" rel="noreferrer">Netzverb/Verbformen.de sözlük yaklaşımı</a>.
+        </p>
+      </footer>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

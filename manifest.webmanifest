@@ -1,0 +1,9 @@
+{
+  "name": "TELC B1 Günlük Çalışma",
+  "short_name": "TELC B1",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f1120",
+  "theme_color": "#8a6cff",
+  "icons": []
+}
